@@ -23,5 +23,5 @@ class Transaction(TransactionBase, table=True):
     account: Optional["Account"] = Relationship(back_populates="transactions")
 
 
-class TransactionCreate(SQLModel):
+class TransactionCreate(TransactionBase):
     pass

@@ -16,7 +16,6 @@ class RecurringTransactionBase(SQLModel):
     description: str
     currency: Currency = Field(sa_column=Column(SAEnum(Currency)))
     recurrency_type: Recurrency = Field(sa_column=Column(SAEnum(Recurrency)))
-    recurrence_interval: int  # e.g., 1 for monthly, 2 for bi-weekly
     start_date: datetime
     end_date: datetime | None = Field(default=None)
     account_id: int = Field(foreign_key="account.id")
