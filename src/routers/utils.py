@@ -5,6 +5,7 @@ from sqlmodel import Session, select, SQLModel
 from pydantic import BaseModel
 
 from src.database import get_session
+from src.dependencies import get_current_user
 
 ModelType = TypeVar("ModelType", bound=SQLModel)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
@@ -13,7 +14,7 @@ CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
 def create_router(
     model: Type[ModelType], model_create: Type[CreateSchemaType], prefix: str, tag: str
 ) -> APIRouter:
-    router = APIRouter(prefix=prefix, tags=[tag])
+    router = APIRouter(prefix=prefix, tags=[tag], dependencies=[Depends(get_current_user)])
 
     @router.get("/", response_model=list[model])
     def get_items(session: Session = Depends(get_session)):
